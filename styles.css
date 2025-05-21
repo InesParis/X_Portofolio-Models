@@ -1,0 +1,28 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+.controls,
+#inputPanel {
+  margin-bottom: 15px;
+}
+
+label {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+#output {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+canvas {
+  border: 1px solid #ccc;
+  background-color: #fff;
+}

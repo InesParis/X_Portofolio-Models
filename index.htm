@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h1>Portfolio Optimization Simulator</h1>
+
+    <div class="controls">
+      <label for="exercise">Choose Exercise:</label>
+      <select id="exercise" onchange="switchExercise()">
+        <option value="1">Exercise 1 – Demand Constraint</option>
+        <option value="2">Exercise 2 – Capacity Constraint</option>
+        <option value="3">Exercise 3 – Emissions Cap</option>
+      </select>
+    </div>
+
+    <div id="inputPanel">
+      <label>Cost Tech 1: <input type="number" id="cost1" value="10" /></label>
+      <label>Cost Tech 2: <input type="number" id="cost2" value="20" /></label>
+      <label>Demand: <input type="number" id="demand" value="100" /></label>
+      <div id="extraInputs"></div>
+      <button onclick="updateSimulation()">Update Simulation</button>
+    </div>
+
+    <canvas id="chart" width="600" height="400"></canvas>
+
+    <div id="output"></div>
+
+    <script src="solver.js"></script>
+    <script src="chart-utils.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
