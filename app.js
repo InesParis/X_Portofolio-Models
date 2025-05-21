@@ -15,7 +15,7 @@ function updateSimulation() {
 
   if (exercise === "3") {
     const cap = parseFloat(document.getElementById("emissions").value);
-    constraints.push((x, y) => 2 * x + 5 * y <= cap); // example emission factors
+    constraints.push((x, y) => 2 * x + 5 * y <= cap);
   }
 
   const solution = solveMinCost(
@@ -32,11 +32,12 @@ function updateSimulation() {
     cost1,
     cost2,
     demand,
-    constraints
+    constraints,
+    solution
   );
 
   const output = document.getElementById("output");
-  output.innerHTML = `Optimal solution: x = ${solution.x}, y = ${solution.y}, Cost = ${solution.cost}`;
+  output.innerHTML = `Optimal Solution: x = ${solution.x}, y = ${solution.y}, Cost = ${solution.cost}`;
 }
 
 function switchExercise() {
