@@ -3,10 +3,26 @@ let currentChart = null;
 function updateSimulation() {
   const cost1 = parseFloat(document.getElementById("cost1").value);
   const cost2 = parseFloat(document.getElementById("cost2").value);
-  const demand = parseFloat(document.getElementById("demand").value);
-  const exercise = document.getElementById("exercise").value;
+  let demand = parseFloat(document.getElementById("demand").value);
 
+  // Ensure demand is at least 100
+  if (demand < 100) {
+    demand = 100;
+    document.getElementById("demand").value = 100; // Update the input field
+  }
+
+  const exercise = document.getElementById("exercise").value;
   let constraints = [];
+
+  if (exercise !== "1") {
+    const capTech1 = parseFloat(document.getElementById("capTech1").value);
+    const capTech2 = parseFloat(document.getElementById("capTech2").value);
+
+    constraints.push(
+      (x, y) => x <= capTech1, // Capacity constraint for Tech 1
+      (x, y) => y <= capTech2 // Capacity constraint for Tech 2
+    );
+  }
 
   if (exercise === "2") {
     const cap = parseFloat(document.getElementById("capacity").value);
@@ -22,8 +38,12 @@ function updateSimulation() {
     cost1,
     cost2,
     demand,
-    demand,
-    demand,
+    exercise === "1"
+      ? demand
+      : parseFloat(document.getElementById("capTech1").value),
+    exercise === "1"
+      ? demand
+      : parseFloat(document.getElementById("capTech2").value),
     constraints
   );
 
