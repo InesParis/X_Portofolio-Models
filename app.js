@@ -36,7 +36,7 @@ function updateSimulation() {
   );
 
   const output = document.getElementById("output");
-  output.innerHTML = `Optimal Solution: x = ${solution.x}, y = ${solution.y}, Cost = ${solution.cost}`;
+  output.innerHTML = `Optimal solution: x = ${solution.x}, y = ${solution.y}, Cost = ${solution.cost}`;
 }
 
 function switchExercise() {
