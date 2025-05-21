@@ -12,17 +12,8 @@ function updateSimulation() {
   }
 
   const exercise = document.getElementById("exercise").value;
+
   let constraints = [];
-
-  if (exercise !== "1") {
-    const capTech1 = parseFloat(document.getElementById("capTech1").value);
-    const capTech2 = parseFloat(document.getElementById("capTech2").value);
-
-    constraints.push(
-      (x, y) => x <= capTech1, // Capacity constraint for Tech 1
-      (x, y) => y <= capTech2 // Capacity constraint for Tech 2
-    );
-  }
 
   if (exercise === "2") {
     const cap = parseFloat(document.getElementById("capacity").value);
@@ -38,12 +29,8 @@ function updateSimulation() {
     cost1,
     cost2,
     demand,
-    exercise === "1"
-      ? demand
-      : parseFloat(document.getElementById("capTech1").value),
-    exercise === "1"
-      ? demand
-      : parseFloat(document.getElementById("capTech2").value),
+    demand,
+    demand,
     constraints
   );
 
