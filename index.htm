@@ -10,6 +10,22 @@
   <body>
     <h1>Portfolio optimization simulator</h1>
 
+    <div id="problemStatement" style="margin-bottom: 15px">
+      <!-- Problem statement will be inserted here -->
+    </div>
+
+    <div
+      id="guidingQuestions"
+      style="
+        margin-bottom: 15px;
+        background: #f7f7f7;
+        padding: 10px;
+        border-radius: 5px;
+      "
+    >
+      <!-- Guiding questions will be inserted here -->
+    </div>
+
     <div class="controls">
       <label for="exercise">Choose exercise:</label>
       <select id="exercise" onchange="switchExercise()">
@@ -22,13 +38,16 @@
     <div id="inputPanel">
       <label
         >Technology 1 cost per unit energy:
-        <input type="number" id="cost1" value="10"
-      /></label>
+        <input type="number" id="cost1" value="10" min="0" step="1" />
+      </label>
       <label
         >Technology 2 cost per unit energy:
-        <input type="number" id="cost2" value="20"
-      /></label>
-      <label>Demand: <input type="number" id="demand" value="100" /></label>
+        <input type="number" id="cost2" value="20" min="0" step="1" />
+      </label>
+      <label
+        >Demand:
+        <input type="number" id="demand" value="100" min="0" step="1" />
+      </label>
       <div id="extraInputs"></div>
       <button onclick="updateSimulation()">Update simulation</button>
     </div>
@@ -37,6 +56,98 @@
 
     <div id="output"></div>
 
+    <script>
+      // Add this script block before your other scripts
+      const statements = {
+        1: `Exercise 1 – Demand constraint:<br>
+        <em>Given two technologies with different costs per unit energy, find the least-cost way to meet a fixed energy demand using any combination of the two.</em>`,
+        2: `Exercise 2 – Capacity constraint:<br>
+        <em>Given two technologies and a total capacity limit, find the least-cost way to meet the energy demand without exceeding the total capacity.</em>`,
+        3: `Exercise 3 – Emissions cap:<br>
+        <em>Given two technologies with different emissions rates, find the least-cost way to meet the energy demand without exceeding a total emissions cap.</em>`,
+      };
+
+      function updateProblemStatement() {
+        const ex = document.getElementById("exercise").value;
+        document.getElementById("problemStatement").innerHTML = statements[ex];
+      }
+
+      // Guiding questions for each exercise
+      const guidingQuestions = {
+        1: `
+          <strong>Guiding Questions:</strong>
+          <ul>
+            <li>How does changing the cost of each technology affect the optimal mix?</li>
+            <li>What happens if both technologies have the same cost?</li>
+            <li>Can you meet the demand using only one technology? Why or why not?</li>
+          </ul>
+        `,
+        2: `
+          <strong>Guiding Questions:</strong>
+          <ul>
+            <li>How does the capacity constraint affect the optimal solution?</li>
+            <li>What happens if the capacity is less than the demand?</li>
+            <li>How does changing the cost or capacity of each technology affect the result?</li>
+          </ul>
+        `,
+        3: `
+          <strong>Guiding Questions:</strong>
+          <ul>
+            <li>How does the emissions cap influence the technology mix?</li>
+            <li>What happens if the emissions cap is very strict or very loose?</li>
+            <li>How do changes in emissions rates or costs affect the optimal solution?</li>
+          </ul>
+        `,
+      };
+
+      function updateGuidingQuestions() {
+        const ex = document.getElementById("exercise").value;
+        document.getElementById("guidingQuestions").innerHTML =
+          guidingQuestions[ex];
+      }
+
+      document
+        .getElementById("exercise")
+        .addEventListener("change", updateGuidingQuestions);
+      document.addEventListener("DOMContentLoaded", updateGuidingQuestions);
+
+      // Add interactive widgets for extra inputs based on exercise
+      function switchExercise() {
+        const ex = document.getElementById("exercise").value;
+        const extraInputs = document.getElementById("extraInputs");
+        extraInputs.innerHTML = "";
+        if (ex === "2") {
+          extraInputs.innerHTML = `
+            <label>Total capacity:
+              <input type="number" id="capacity" value="120" min="0" step="1" />
+            </label>
+          `;
+        } else if (ex === "3") {
+          extraInputs.innerHTML = `
+            <label>Technology 1 emissions rate:
+              <input type="number" id="emissions1" value="0.5" min="0" step="0.01" />
+            </label>
+            <label>Technology 2 emissions rate:
+              <input type="number" id="emissions2" value="1.0" min="0" step="0.01" />
+            </label>
+            <label>Total emissions cap:
+              <input type="number" id="emissionsCap" value="80" min="0" step="1" />
+            </label>
+          `;
+        }
+        updateSimulation();
+        updateGuidingQuestions();
+        updateProblemStatement();
+      }
+
+      document
+        .getElementById("exercise")
+        .addEventListener("change", updateProblemStatement);
+      document.addEventListener("DOMContentLoaded", updateProblemStatement);
+
+      // Call switchExercise on page load to initialize
+      document.addEventListener("DOMContentLoaded", switchExercise);
+    </script>
     <script src="solver.js"></script>
     <script src="chart-utils.js"></script>
     <script src="app.js"></script>
